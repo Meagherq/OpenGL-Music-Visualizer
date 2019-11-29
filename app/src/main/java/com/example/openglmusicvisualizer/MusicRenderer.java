@@ -3,6 +3,7 @@ package com.example.openglmusicvisualizer;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.SystemClock;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -14,7 +15,9 @@ public class MusicRenderer implements GLSurfaceView.Renderer {
 
     private final float[] vPMatrix = new float[16];
     private final float[] projectionMatrix = new float[16];
+    private float[] rotationMatrix = new float[16];
     private final float[] viewMatrix = new float[16];
+    public volatile float mAngle;
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -36,6 +39,7 @@ public class MusicRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 unused) {
+        float[] scratch = new float[16];
         // Set the camera position (View matrix)
         Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
@@ -44,7 +48,27 @@ public class MusicRenderer implements GLSurfaceView.Renderer {
 
         // Draw shape
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        mTriangle.draw(vPMatrix);
+        //mTriangle.draw(vPMatrix);
+//        long time = SystemClock.uptimeMillis() % 4000L;
+////        float angle = 0.090f * ((int) time);
+////        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
+////
+////        // Combine the rotation matrix with the projection and camera view
+////        // Note that the vPMatrix factor *must be first* in order
+////        // for the matrix multiplication product to be correct.
+////        Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
+////
+////        // Draw triangle
+////        mTriangle.draw(scratch);
+        Matrix.setRotateM(rotationMatrix, 0, mAngle, 0, 0, -1.0f);
+
+        // Combine the rotation matrix with the projection and camera view
+        // Note that the vPMatrix factor *must be first* in order
+        // for the matrix multiplication product to be correct.
+        Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
+
+        // Draw triangle
+        mTriangle.draw(scratch);
     }
 
 
@@ -63,5 +87,13 @@ public class MusicRenderer implements GLSurfaceView.Renderer {
         GLES20.glCompileShader(shader);
 
         return shader;
+    }
+
+    public float getAngle() {
+        return mAngle;
+    }
+
+    public void setAngle(float angle) {
+        mAngle = angle;
     }
 }
