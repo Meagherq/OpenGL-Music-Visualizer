@@ -8,6 +8,7 @@ public class MusicView extends GLSurfaceView {
 
     public MusicView(Context context){
         super(context);
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         init();
     }
     public MusicView(Context context, AttributeSet attrs){
