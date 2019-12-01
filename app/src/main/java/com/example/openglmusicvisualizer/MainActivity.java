@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         // as the ContentView for this Activity.
         setContentView(R.layout.activity_main);
         musicView =(MusicView) findViewById(R.id.musicView);
+        //startVisualiser();
     }
 
     @Override
