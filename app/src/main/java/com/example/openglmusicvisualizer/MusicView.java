@@ -5,12 +5,15 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.util.Arrays;
+
 public class MusicView extends GLSurfaceView {
 
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
     private float previousX;
     private float previousY;
     private MusicRenderer mRenderer = new MusicRenderer();
+    private byte[] waveform; //bytes representing amplitude of each frequency (amp range: -128 to +127)
 
     public MusicView(Context context){
         super(context);
@@ -26,6 +29,12 @@ public class MusicView extends GLSurfaceView {
         setEGLContextClientVersion(2);
         setPreserveEGLContextOnPause(true);
         setRenderer(mRenderer);
+    }
+
+    public void setWaveform(byte[] waveform) {
+        this.waveform = Arrays.copyOf(waveform, waveform.length); //create value copy, rather than ref copy
+        //idk if we need the invalidate() below...
+        invalidate();
     }
 
     @Override
