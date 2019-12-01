@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
     protected void onResume() {
         super.onResume();
         musicView.onResume();
-        startVisualiser();
+        //startVisualiser();
     }
 
     @Override
