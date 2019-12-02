@@ -5,6 +5,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title">OpenGL Music Visualizer</string>
-    <string name="shape">Shape</string>
+    <string name="shape">Style</string>
     <string name="color">Color</string>
 </resources>
