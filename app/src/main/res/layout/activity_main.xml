@@ -7,21 +7,6 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="@string/title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:text="@string/shape"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -38,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="24dp"
         android:text="@string/color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
@@ -49,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
@@ -58,28 +43,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="Bars" />
+            android:text="Bars"
+            android:textColor="@color/text"
+            android:textColorHint="@color/text"
+            android:theme="@style/MyRadioButton" />
 
         <RadioButton
             android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
+            android:layout_width="96dp"
             android:layout_height="wrap_content"
-            android:text="Waves" />
+            android:text="Waves"
+            android:textColor="@color/text"
+            android:theme="@style/MyRadioButton" />
 
         <RadioButton
             android:id="@+id/radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Raw" />
+            android:text="Raw"
+            android:textColor="@color/text"
+            android:theme="@style/MyRadioButton" />
     </RadioGroup>
 
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -88,31 +80,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Red" />
+            android:text="Red"
+            android:textColor="@color/text"
+            android:theme="@style/MyRedRadioButton" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Blue" />
+            android:text="Blue"
+            android:textColor="@color/text"
+            android:theme="@style/MyBlueRadioButton" />
 
         <RadioButton
             android:id="@+id/radioButton6"
-            android:layout_width="match_parent"
+            android:layout_width="94dp"
             android:layout_height="wrap_content"
-            android:text="Green" />
+            android:text="Green"
+            android:textColor="@color/text"
+            android:theme="@style/MyGreenRadioButton" />
     </RadioGroup>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/darkPurple"
         android:text="Start Visualization"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

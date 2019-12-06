@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CIS357OpenGLESMusicVisualizer</string>
+    <string name="app_name">OpenGL ES Music Visualizer</string>
 
     <string name="title_activity_music">MusicActivity</string>
     <string name="dummy_button">Dummy Button</string>

@@ -39,7 +39,6 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
     private MusicVisualization mRender;
     private SceneController mSceneController;
     private List<Pair<String, ? extends GLScene>> mSceneList;
-    private MediaPlayer mPlayer;
     private Visualizer mVisualizer;
 
 
@@ -164,11 +163,7 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
             }
         });
 
-        mPlayer = MediaPlayer.create(this, R.raw.music);
-        mPlayer.setLooping(true);
-        mPlayer.start();
-
-        mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
+        mVisualizer = new Visualizer(0);
         mVisualizer.setCaptureSize(captureSize);
         mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate(), true, true);
         mVisualizer.setEnabled(true);
@@ -209,9 +204,6 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPlayer != null) {
-            mVisualizer.setEnabled(false);
-            mPlayer.release();
-        }
+        mVisualizer.setEnabled(false);
     }
 }
