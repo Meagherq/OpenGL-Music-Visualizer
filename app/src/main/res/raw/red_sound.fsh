@@ -12,10 +12,10 @@ void main() {
     float wave = texture2D(iChannel0, vec2(fragCoord.x, 0.75)).x;
 
     // convert frequency to colors
-    vec3 col = vec3(fft, 4.0 * fft * (1.0 - fft), 1.0 - fft) * fft;
+    vec3 col = vec3(fft + .7, 1.0 * fft * (1.0 - fft), 1.0 - fft) * fft;
 
     // add wave form on top
-    col += 1.0 - smoothstep(0.0, 0.02, abs(wave - fragCoord.y));
+    col += 1.0 - smoothstep(0.2, 0.06, abs(wave - fragCoord.y));
 
     // output final color
     gl_FragColor = vec4(col, 1.0);

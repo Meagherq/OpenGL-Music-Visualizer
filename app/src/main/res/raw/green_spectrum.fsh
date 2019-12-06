@@ -25,7 +25,7 @@ vec3 intensityToColour(float i) {
 	// with s = 0.8, l = 0.5
 	float h = 0.666666 - (i * 0.666666);
 
-	return vec3(h2rgb(h + 0.333333), h2rgb(h), h2rgb(h - 0.333333));
+	return vec3(.1, .9, .1);
 }
 
 void main() {

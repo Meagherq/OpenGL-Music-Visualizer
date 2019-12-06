@@ -7,8 +7,6 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,13 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.cis357openglesmusicvisualizer.opengl.BlueWaveScene;
 import com.example.cis357openglesmusicvisualizer.opengl.Frame;
 import com.example.cis357openglesmusicvisualizer.opengl.GLScene;
+import com.example.cis357openglesmusicvisualizer.opengl.GreenBarScene;
+import com.example.cis357openglesmusicvisualizer.opengl.GreenWaveScene;
 import com.example.cis357openglesmusicvisualizer.opengl.MusicVisualization;
 import com.example.cis357openglesmusicvisualizer.opengl.RawMusicScene;
+import com.example.cis357openglesmusicvisualizer.opengl.RedBarScene;
 import com.example.cis357openglesmusicvisualizer.opengl.SceneController;
-import com.example.cis357openglesmusicvisualizer.opengl.SimpleBarScene;
-import com.example.cis357openglesmusicvisualizer.opengl.SimpleWaveScene;
+import com.example.cis357openglesmusicvisualizer.opengl.BlueBarScene;
+import com.example.cis357openglesmusicvisualizer.opengl.RedWaveScene;
 import com.example.cis357openglesmusicvisualizer.opengl.WaveForm;
 
 import java.util.ArrayList;
@@ -56,7 +58,6 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                         REQUEST_PERMISSION);
             }
-
         } else {
             start();
         }
@@ -76,6 +77,7 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
     }
 
     private void start() {
+
         int captureSize = Visualizer.getCaptureSizeRange()[1];
         captureSize = captureSize > 512 ? 512 : captureSize;
 
@@ -96,13 +98,67 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
         mRender.setSceneController(mSceneController = new SceneController() {
             @Override
             public void onSetup(Context context, int audioTextureId, int textureWidth) {
+                Bundle extras = getIntent().getExtras();
                 mSceneList = new ArrayList<>();
-                GLScene defaultScene = new SimpleBarScene(context, audioTextureId, textureWidth);
-                mSceneList.add(Pair.create("Simple Bar Equalizer", defaultScene));
-                mSceneList.add(Pair.create("Simple Wave Equalizer", new SimpleWaveScene(context, audioTextureId, textureWidth)));
-                mSceneList.add(Pair.create("Raw Music Output", new RawMusicScene(context, audioTextureId, textureWidth)));
+                String color = "";
+                GLScene blueScene = new BlueBarScene(context, audioTextureId, textureWidth);
+                GLScene redScene = new RedBarScene(context, audioTextureId, textureWidth);
+                GLScene greenScene = new GreenBarScene(context, audioTextureId, textureWidth);
+                GLScene redWaveScene = new RedWaveScene(context, audioTextureId, textureWidth);
+                GLScene blueWaveScene = new BlueWaveScene(context, audioTextureId, textureWidth);
+                GLScene greenWaveScene = new GreenWaveScene(context, audioTextureId, textureWidth);
+                GLScene rawScene = new RawMusicScene(context, audioTextureId, textureWidth);
+                mSceneList.add(Pair.create("Simple Red Bar Equalizer", redScene));
+                mSceneList.add(Pair.create("Simple Blue Bar Equalizer", blueScene));
+                mSceneList.add(Pair.create("Simple Green Bar Equalizer", greenScene));
+                mSceneList.add(Pair.create("Simple Red Wave Equalizer", redWaveScene));
+                mSceneList.add(Pair.create("Simple Blue Wave Equalizer", blueWaveScene));
+                mSceneList.add(Pair.create("Simple Green Wave Equalizer", greenWaveScene));
+                mSceneList.add(Pair.create("Raw Music Output", rawScene));
+                //changeScene(redScene);
+                if (extras != null) {
+                    String shape = extras.getString("EXTRA_SHAPE");
+                    if (extras.getString("EXTRA_SHAPE").equals("Bars") || extras.getString("EXTRA_SHAPE").equals("Waves"))
+                    {
+                        color = extras.getString("EXTRA_COLOR");
+                    }
 
-                changeScene(defaultScene);
+                    if (shape.equals("Bars"))
+                    {
+                        if (color.equals("Red"))
+                        {
+                            changeScene(redScene);
+                        }
+                        else if (color.equals("Blue"))
+                        {
+                            changeScene(blueScene);
+                        }
+                        else if (color.equals("Green"))
+                        {
+                            changeScene(greenScene);
+                        }
+                    }
+                    else if (shape.equals("Waves"))
+                    {
+                        if (color.equals("Red"))
+                        {
+                            changeScene(redWaveScene);
+                        }
+                        else if (color.equals("Blue"))
+                        {
+                            changeScene(blueWaveScene);
+                        }
+                        else if (color.equals("Green"))
+                        {
+                            changeScene(greenWaveScene);
+                        }
+                    }
+                    else if (shape.equals("Raw"))
+                    {
+                        changeScene(rawScene);
+                    }
+                    //The key argument here must match that used in the other activity
+                }
 
                 invalidateOptionsMenu();
             }
@@ -128,27 +184,27 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
         mRender.updateFrame(new Frame(fft, 0, fft.length / 2));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.clear();
-        if (mSceneList != null) {
-            int id = 0;
-            for (Pair<String, ? extends GLScene> pair : mSceneList) {
-                menu.add(0, id, id, pair.first);
-                id ++;
-            }
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mSceneList != null && mSceneController != null) {
-            final GLScene scene = mSceneList.get(item.getItemId()).second;
-            mSceneController.changeScene(scene);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        menu.clear();
+//        if (mSceneList != null) {
+//            int id = 0;
+//            for (Pair<String, ? extends GLScene> pair : mSceneList) {
+//                menu.add(0, id, id, pair.first);
+//                id ++;
+//            }
+//        }
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (mSceneList != null && mSceneController != null) {
+//            final GLScene scene = mSceneList.get(item.getItemId()).second;
+//            mSceneController.changeScene(scene);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onDestroy() {
