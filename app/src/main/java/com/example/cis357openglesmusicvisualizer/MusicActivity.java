@@ -3,7 +3,6 @@ package com.example.cis357openglesmusicvisualizer;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.util.Pair;
@@ -178,28 +177,6 @@ public class MusicActivity extends AppCompatActivity implements Visualizer.OnDat
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
         mRender.updateFrame(new Frame(fft, 0, fft.length / 2));
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        menu.clear();
-//        if (mSceneList != null) {
-//            int id = 0;
-//            for (Pair<String, ? extends GLScene> pair : mSceneList) {
-//                menu.add(0, id, id, pair.first);
-//                id ++;
-//            }
-//        }
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (mSceneList != null && mSceneController != null) {
-//            final GLScene scene = mSceneList.get(item.getItemId()).second;
-//            mSceneController.changeScene(scene);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected void onDestroy() {
